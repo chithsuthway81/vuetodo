@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container grid-list-xs>
     <v-layout justify-center v-show="!isCreating">
       <v-btn color="primary" @click="Show" class="d-none d-md-inline-block">+ Create</v-btn>
       <v-btn fixed large fab bottom right class="d-md-none" @click="Show" color="primary">

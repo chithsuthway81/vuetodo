@@ -1,38 +1,5 @@
 <template>
-  <v-container>
-    <div>
-      <v-app-bar color="deep-purple accent-4" dense dark>
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-        <v-toolbar-title>
-          <i>Notes</i>
-        </v-toolbar-title>
-
-        <v-spacer></v-spacer>
-
-        <v-btn icon>
-          <v-icon>mdi-heart</v-icon>
-        </v-btn>
-
-        <v-btn icon>
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-
-        <v-menu left bottom>
-          <template v-slot:activator="{ on }">
-            <v-btn icon v-on="on">
-              <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
-          </template>
-
-          <v-list>
-            <v-list-item v-for="n in tasks.length" :key="n" @click="() => {}">
-              <v-list-item-title>Task {{ n }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </v-app-bar>
-    </div>
+  <v-container grid-list-xs>
     <v-tabs grow>
       <v-tab>
         <v-badge color="primary">
@@ -91,16 +58,16 @@
     </v-tabs>
 
     <task-create-component @save-submitted="save" />
-    <v-snackbar v-model="snack_completed" color="success" bottom right :timeout="1000">
+    <v-snackbar v-model="snack_completed" color="success" top>
       Task is completed
       <v-btn text color="default" @click.native="snack_completed = false"></v-btn>
     </v-snackbar>
 
-    <v-snackbar v-model="snack_created" color="info" top :timeout="1000">
+    <v-snackbar v-model="snack_created" color="info" top right>
       Task is created
       <v-btn text color="info" @click.native="snack_created = false"></v-btn>
     </v-snackbar>
-    <v-snackbar v-model="delete_Dialog" color="black" top>
+    <v-snackbar v-model="delete_Dialog" color="black" bottom right>
       Task move to trash
       <v-btn text color="primary" @click="undo">Undo</v-btn>
       <v-btn text @click.native="delete_Dialog=false">
@@ -131,16 +98,6 @@ export default {
           title: "Task2",
           details: "Learning  Vue js",
           done: true
-        },
-        {
-          title: "Task3",
-          details: "Terrer",
-          done: true
-        },
-        {
-          title: "Task4",
-          details: "Responsive Job",
-          done: true
         }
       ],
       snack_completed: false,
@@ -153,8 +110,8 @@ export default {
   methods: {
     deleteTask(task) {
       this.undoarr = task;
-      this.trashIndex = index;
       const index = this.tasks.indexOf(task);
+      this.trashIndex = index;
       this.tasks.splice(index, 1);
       this.delete_Dialog = true;
     },
